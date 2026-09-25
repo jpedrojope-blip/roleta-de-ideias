@@ -114,7 +114,7 @@ function renderWheel() {
   });
   parts.push(`<circle cx="${center}" cy="${center}" r="81" fill="#fff"/>`);
   parts.push(`<circle cx="${center}" cy="${center}" r="71" fill="#f4fff9" stroke="#b7e7cd" stroke-width="2"/>`);
-  parts.push(`<g transform="translate(${center - 31} ${center - 31})"><rect width="62" height="62" rx="15" fill="#070707"/><text x="6" y="45" fill="#3EF284" font-family="Arial Black, Arial, sans-serif" font-size="34" font-weight="900" letter-spacing="-5">N</text><text x="29" y="45" fill="#35AA76" font-family="Arial Black, Arial, sans-serif" font-size="34" font-weight="900" letter-spacing="-5">G</text></g>`);
+  parts.push(`<g transform="translate(${center - 31} ${center - 31})"><rect width="62" height="62" rx="10" fill="#070707"/><g transform="scale(.41333)"><path d="M37 43h18l41 38V43h17v58H95L55 65v36H37V43Z" fill="#3EF284"/><path d="M113 43H78c-14 0-25 12-25 29s11 29 25 29h35V76H83v14h13v-4H78c-5 0-9-5-9-14s4-14 9-14h35V43Z" fill="#35AA76"/></g></g>`);
   rotor.innerHTML = parts.join("");
 }
 
