@@ -8,7 +8,12 @@ const defaultIdeas = [
   { name: "Contabilidades", offer: "Portal do cliente + envio de documentos + automação." },
   { name: "Oficinas e assistências técnicas", offer: "Ordens de serviço + estoque + orçamento por WhatsApp." },
   { name: "Lojas e varejo local", offer: "Loja virtual + catálogo + integração com Instagram." },
-  { name: "Escolas e professores", offer: "Matrículas online + área de membros + gestão." }
+  { name: "Escolas e professores", offer: "Matrículas online + área de membros + gestão." },
+  { name: "Mercados", offer: "Catálogo digital + pedidos pelo WhatsApp + presença local." },
+  { name: "Construtoras", offer: "Landing pages de empreendimentos + captação de leads." },
+  { name: "Lojas de roupas", offer: "Loja virtual + catálogo para Instagram e WhatsApp." },
+  { name: "Aulas de dança", offer: "Matrículas online + agenda de turmas + pagamentos." },
+  { name: "Cursinhos", offer: "Matrículas online + área de aulas + gestão de alunos." }
 ];
 
 const wheelLabels = {
@@ -267,7 +272,17 @@ const saved = localStorage.getItem("roleta-de-ideias");
 if (saved) {
   try {
     const parsed = JSON.parse(saved);
-    if (Array.isArray(parsed)) state.ideas = parsed.filter((item) => item?.name);
+    if (Array.isArray(parsed)) {
+      state.ideas = parsed.filter((item) => item?.name);
+      const newDefaultNames = ["Mercados", "Construtoras", "Lojas de roupas", "Aulas de dança", "Cursinhos"];
+      defaultIdeas
+        .filter((idea) => newDefaultNames.includes(idea.name))
+        .forEach((idea) => {
+          if (!state.ideas.some((savedIdea) => savedIdea.name.toLowerCase() === idea.name.toLowerCase())) {
+            state.ideas.push(idea);
+          }
+        });
+    }
   } catch { localStorage.removeItem("roleta-de-ideias"); }
 }
 itemsPanel.inert = true;
