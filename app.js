@@ -77,11 +77,10 @@ function renderWheel() {
     return;
   }
   const colors = [
-    { fill: "#ff6b74", text: "#3d1732" },
-    { fill: "#ffd85a", text: "#3b2d00" },
-    { fill: "#5fd2d1", text: "#123a43" },
-    { fill: "#6366f1", text: "#ffffff" },
-    { fill: "#d52b9a", text: "#ffffff" }
+    { fill: "#35AA76", text: "#070707" },
+    { fill: "#3EF284", text: "#070707" },
+    { fill: "#08AF7B", text: "#070707" },
+    { fill: "#070707", text: "#3EF284" }
   ];
   const count = state.ideas.length;
   const step = 360 / count;
@@ -114,8 +113,8 @@ function renderWheel() {
     parts.push(`<circle cx="${dot.x}" cy="${dot.y}" r="3" fill="#fff" opacity=".8"/>`);
   });
   parts.push(`<circle cx="${center}" cy="${center}" r="81" fill="#fff"/>`);
-  parts.push(`<circle cx="${center}" cy="${center}" r="71" fill="#f8f7ff" stroke="#e8e6fa" stroke-width="2"/>`);
-  parts.push(`<g transform="translate(${center - 31} ${center - 31})" fill="none" stroke="#d3198f" stroke-width="4" stroke-linecap="round"><path d="M31 3 59 31 31 59 3 31 31 3Z"/><path d="M31 16v30M16 31h30"/><circle cx="31" cy="31" r="5" fill="#d3198f" stroke="none"/></g>`);
+  parts.push(`<circle cx="${center}" cy="${center}" r="71" fill="#f4fff9" stroke="#b7e7cd" stroke-width="2"/>`);
+  parts.push(`<g transform="translate(${center - 31} ${center - 31})"><rect width="62" height="62" rx="15" fill="#070707"/><path d="M11 47V15h10l22 22V15h10v32H43L21 24v23H11Z" fill="#3EF284"/><path d="M51 33H38v8h7v2h-7c-4 0-7-3-7-7v-3c0-4 3-7 7-7h13v-8H38c-9 0-16 7-16 16v3c0 9 7 16 16 16h13V33Z" fill="#35AA76"/></g>`);
   rotor.innerHTML = parts.join("");
 }
 
