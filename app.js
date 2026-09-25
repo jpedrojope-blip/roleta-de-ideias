@@ -26,7 +26,12 @@ const wheelLabels = {
   "Contabilidades": "Contabilidade",
   "Oficinas e assistências técnicas": "Oficinas",
   "Lojas e varejo local": "Varejo local",
-  "Escolas e professores": "Escolas"
+  "Escolas e professores": "Escolas",
+  "Mercados": "Mercados",
+  "Construtoras": "Construtoras",
+  "Lojas de roupas": "Roupas",
+  "Aulas de dança": "Dança",
+  "Cursinhos": "Cursinhos"
 };
 
 const state = { ideas: [...defaultIdeas], angle: 0, spinning: false, sound: true };
@@ -64,17 +69,32 @@ function sectorPath(cx, cy, radius, startAngle, endAngle) {
 }
 
 function renderWheel() {
+  wheel.setAttribute("aria-label", state.ideas.length
+    ? `Roleta com ${state.ideas.length} ideias de negócio`
+    : "Roleta sem itens");
   if (!state.ideas.length) {
     rotor.innerHTML = `<circle cx="260" cy="260" r="232" fill="#fff"/><circle cx="260" cy="260" r="225" fill="#eeecff" stroke="#d7d5ef" stroke-width="2"/><text x="260" y="246" fill="#6366f1" font-size="18" font-weight="800" text-anchor="middle" font-family="Plus Jakarta Sans, Arial, sans-serif">Sem itens</text><text x="260" y="274" fill="#777394" font-size="12" text-anchor="middle" font-family="Plus Jakarta Sans, Arial, sans-serif">Abra Itens para adicionar</text>`;
     return;
   }
-  const colors = ["#ff6b74", "#ffd84b", "#5fd2d1", "#6366f1", "#d52b9a"];
+  const colors = [
+    { fill: "#ff6b74", text: "#3d1732" },
+    { fill: "#ffd85a", text: "#3b2d00" },
+    { fill: "#5fd2d1", text: "#123a43" },
+    { fill: "#6366f1", text: "#ffffff" },
+    { fill: "#d52b9a", text: "#ffffff" }
+  ];
   const count = state.ideas.length;
   const step = 360 / count;
   const center = 260;
   const outer = 225;
-  const textRadius = 162;
-  const parts = [`<circle cx="${center}" cy="${center}" r="232" fill="#fff"/>`, `<circle cx="${center}" cy="${center}" r="227" fill="none" stroke="#c9d5fb" stroke-width="2"/>`];
+  const textRadius = count > 12 ? 176 : 162;
+  const fontSize = count > 12 ? 10.5 : count > 8 ? 12 : 14;
+  const maxLabelWidth = count > 12 ? 56 : 84;
+  const parts = [
+    `<circle cx="${center}" cy="${center}" r="232" fill="#fff"/>`,
+    `<circle cx="${center}" cy="${center}" r="228" fill="none" stroke="#bcc9f3" stroke-width="2"/>`,
+    `<circle cx="${center}" cy="${center}" r="220" fill="none" stroke="#ffffff" stroke-opacity=".72" stroke-width="2"/>`
+  ];
 
   state.ideas.forEach((idea, index) => {
     const startAngle = index * step;
@@ -84,11 +104,14 @@ function renderWheel() {
     const normalized = ((midAngle + 90) % 360 + 360) % 360;
     const textRotation = normalized > 180 ? midAngle + 180 : midAngle;
     const label = wheelLabels[idea.name] || (idea.name.length > 16 ? `${idea.name.slice(0, 15)}…` : idea.name);
-    const textColor = index % 5 === 1 || index % 5 === 3 ? "#fff" : "#17143b";
+    const palette = colors[index % colors.length];
+    const estimatedWidth = label.length * fontSize * .58;
+    const textFit = estimatedWidth > maxLabelWidth
+      ? ` textLength="${maxLabelWidth}" lengthAdjust="spacingAndGlyphs"`
+      : "";
     const dot = polar(center, center, outer - 4, startAngle);
-    parts.push(`<path d="${sectorPath(center, center, outer, startAngle, endAngle)}" fill="${colors[index % colors.length]}" stroke="#fff" stroke-width="2"/>`);
+    parts.push(`<g><title>${escapeXml(idea.name)} — ${escapeXml(idea.offer)}</title><path d="${sectorPath(center, center, outer, startAngle, endAngle)}" fill="${palette.fill}" stroke="#fff" stroke-width="2.5"/><text x="${textPoint.x}" y="${textPoint.y}" transform="rotate(${textRotation} ${textPoint.x} ${textPoint.y})" fill="${palette.text}" font-size="${fontSize}" font-weight="800" letter-spacing="-.02em" text-anchor="middle" dominant-baseline="middle" font-family="Plus Jakarta Sans, Arial, sans-serif"${textFit}>${escapeXml(label)}</text></g>`);
     parts.push(`<circle cx="${dot.x}" cy="${dot.y}" r="3" fill="#fff" opacity=".8"/>`);
-    parts.push(`<text x="${textPoint.x}" y="${textPoint.y}" transform="rotate(${textRotation} ${textPoint.x} ${textPoint.y})" fill="${textColor}" font-size="${count > 8 ? 12 : 14}" font-weight="800" text-anchor="middle" dominant-baseline="middle" font-family="Plus Jakarta Sans, Arial, sans-serif">${escapeXml(label)}</text>`);
   });
   parts.push(`<circle cx="${center}" cy="${center}" r="81" fill="#fff"/>`);
   parts.push(`<circle cx="${center}" cy="${center}" r="71" fill="#f8f7ff" stroke="#e8e6fa" stroke-width="2"/>`);
