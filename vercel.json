@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/pt/apps/girar-roleta-aleatoria",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pt/apps/girar-roleta-aleatoria/",
+      "destination": "/index.html"
+    }
+  ]
+}

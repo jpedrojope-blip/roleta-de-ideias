@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f3ff" />
+    <meta name="description" content="Roleta de Ideias: gire para escolher seu próximo nicho." />
+    <title>Roleta de Ideias</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#roulette">Pular para a roleta</a>
+
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Roleta de Ideias">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 2 38 20 20 38 2 20 20 2Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M20 11v18M11 20h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="20" r="4" fill="currentColor"/></svg></span>
+        <span>Roleta<span class="brand-accent">de Ideias</span></span>
+      </a>
+      <div class="topbar-status"><span class="status-dot" aria-hidden="true"></span> pronto para girar</div>
+    </header>
+
+    <main id="roulette" class="roulette-main">
+      <div class="roulette-heading">
+        <span class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> escolha aleatória</span>
+        <h1>Roleta de Ideias</h1>
+        <p>Gire a roda e descubra qual nicho pode virar sua próxima oferta.</p>
+      </div>
+
+      <section class="wheel-card" aria-label="Roleta de ideias">
+        <button class="items-tab" id="items-toggle" type="button" aria-controls="items-panel" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5h12M6 12h12M6 18.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="4" cy="5.5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18.5" r="1" fill="currentColor"/></svg>
+          <span>Itens</span><strong id="item-count">10</strong>
+        </button>
+        <div class="wheel-status"><span class="status-dot" aria-hidden="true"></span><span id="stage-message">Pronto para sortear</span></div>
+        <div class="wheel-wrap">
+          <div class="wheel-pointer" aria-hidden="true"><span></span></div>
+          <svg id="wheel" class="wheel" viewBox="0 0 520 520" role="img" aria-label="Roleta com dez ideias de negócio"><g id="wheel-rotor"></g></svg>
+        </div>
+        <p class="wheel-hint"><span aria-hidden="true">Clique na roda ou pressione Espaço</span></p>
+        <div class="result-card" id="result-card" aria-live="polite" aria-atomic="true">
+          <div class="result-kicker">Próxima ideia</div>
+          <div class="result-title" id="result-title">Gire para descobrir</div>
+          <div class="result-offer" id="result-offer">Seu próximo nicho aparece aqui.</div>
+        </div>
+        <div class="wheel-actions">
+          <button class="icon-button" type="button" data-action="sound" aria-label="Som ligado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l4 3V7l-4 3H5Zm11.5-2a5.5 5.5 0 0 1 0 8M15 10.5a2 2 0 0 1 0 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="spin-button" id="spin-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" fill="currentColor"/></svg><span>Girar</span></button>
+          <button class="icon-button" type="button" data-action="fullscreen" aria-label="Tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H4v4m12-4h4v4M8 20H4v-4m16 0v4h-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </section>
+    </main>
+
+    <div class="panel-backdrop" id="panel-backdrop" hidden></div>
+    <aside class="items-panel" id="items-panel" aria-label="Editar itens da roleta" aria-hidden="true">
+      <div class="panel-header">
+        <div><span class="panel-kicker">configuração</span><h2>Itens da roleta <span id="panel-count">10</span></h2></div>
+        <button class="close-button" id="items-close" type="button" aria-label="Fechar itens">×</button>
+      </div>
+      <p class="panel-description">Adicione ou remova opções. Um item por linha.</p>
+      <form class="add-form" id="add-form">
+        <label class="sr-only" for="new-item">Novo item</label>
+        <input id="new-item" name="new-item" type="text" placeholder="Digite uma nova ideia" autocomplete="off" />
+        <button type="submit" aria-label="Adicionar item"><span aria-hidden="true">+</span></button>
+      </form>
+      <div class="list-toolbar"><span>Itens ativos</span><div><button type="button" data-action="shuffle">Misturar</button><button type="button" data-action="clear">Limpar</button></div></div>
+      <ul class="item-list" id="item-list"></ul>
+      <div class="panel-footer"><span><span class="status-dot" aria-hidden="true"></span> alterações salvas automaticamente</span><button class="done-button" id="items-done" type="button">Concluir</button></div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
