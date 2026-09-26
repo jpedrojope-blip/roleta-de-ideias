@@ -7,6 +7,18 @@
     {
       "source": "/pt/apps/girar-roleta-aleatoria/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/pt/apps/styles.css",
+      "destination": "/styles.css"
+    },
+    {
+      "source": "/pt/apps/app.js",
+      "destination": "/app.js"
+    },
+    {
+      "source": "/pt/apps/logo-sem-fundo.png",
+      "destination": "/logo-sem-fundo.png"
     }
   ]
 }
